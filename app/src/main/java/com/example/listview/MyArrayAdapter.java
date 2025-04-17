@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log; // Import Log
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,31 +18,38 @@ public class MyArrayAdapter extends ArrayAdapter<contact> {
     Activity context;
     int idlayout;
     ArrayList<contact> mylist;
-    // Tạo Constructor để MainActivity gọi đến và truyền các tham số
+
     public MyArrayAdapter(Activity context, int idlayout, ArrayList<contact> mylist) {
         super(context, idlayout, mylist);
         this.context = context;
         this.idlayout = idlayout;
         this.mylist = mylist;
     }
-    //Gọi đến hàm getView để xây dựng lại Adapter
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup
             parent) {
         LayoutInflater myInflactor = context.getLayoutInflater();
-        convertView = myInflactor.inflate(idlayout,null);
+        convertView = myInflactor.inflate(idlayout, null);
         contact mycontact = mylist.get(position);
-// Ứng với mỗi thuộc tính, ta thực hiện 2 việc
-//- Gán id
-        ImageView avatar = convertView.findViewById(R.id.contact_avatar);
-// - Thiết lập dữ liệu
-        avatar.setImageResource(mycontact.getAvatar());
-//-------------textview-----------
-        TextView txt_name = convertView.findViewById(R.id.txt_name);
-        txt_name.setText(mycontact.getName());
 
+        ImageView avatar = convertView.findViewById(R.id.contact_avatar);
+        TextView txt_name = convertView.findViewById(R.id.txt_name);
         TextView txt_phone = convertView.findViewById(R.id.txt_phone);
+
+        try {
+            if (mycontact.getAvatarUri() != null) {
+                avatar.setImageURI(mycontact.getAvatarUri());
+            } else {
+                avatar.setImageResource(R.drawable.img);
+            }
+        } catch (Exception e) {
+            Log.e("MyArrayAdapter", "Error setting image", e);
+            avatar.setImageResource(R.drawable.img); // Set default image on error
+        }
+
+        txt_name.setText(mycontact.getName());
         txt_phone.setText(mycontact.getPhoneNumber());
         return convertView;
     }

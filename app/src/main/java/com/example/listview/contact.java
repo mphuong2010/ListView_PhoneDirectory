@@ -1,16 +1,30 @@
 package com.example.listview;
+
+import android.net.Uri;
+
 public class contact {
     private String name, phoneNumber;
-    private int avatar;
+    private Uri avatarUri;
+    private boolean isSelected; // New boolean field for selection
 
-    public int getAvatar() {
-        return avatar;
+    // Constructor
+    public contact(Uri avatarUri, String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.avatarUri = avatarUri;
+        this.isSelected = false; // Default to false
     }
 
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
+    // Getter and Setter for avatarUri
+    public Uri getAvatarUri() {
+        return avatarUri;
     }
 
+    public void setAvatarUri(Uri avatarUri) {
+        this.avatarUri = avatarUri;
+    }
+
+    // Getter and Setter for phoneNumber
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -19,6 +33,7 @@ public class contact {
         this.phoneNumber = phoneNumber;
     }
 
+    // Getter and Setter for name
     public String getName() {
         return name;
     }
@@ -26,11 +41,13 @@ public class contact {
     public void setName(String name) {
         this.name = name;
     }
-    //Tạo constructor
-    public contact(int avatar, String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.avatar = avatar;
+
+    // Getter and Setter for isSelected
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
-
